@@ -1,26 +1,8 @@
-import type{NextApiRequest, NextApiResponse} from "next";
+import type{NextApiResponse} from "next";
+import {ExtendedNextApiRequestAuth, DecodedType, ResMessageType} from "./types";
 import jwt from "jsonwebtoken";
 const secret_key = "nextmarket"
 
-
-interface DecodedType{
-    email: string
-}
-
-interface ExtendedNextApiRequestAuth extends NextApiRequest {
-
-    headers:{
-        authorization:string
-    }
-
-    body:{
-        email: string
-    }
-}
-
-interface ResMessageType{
-    message: string
-}
 
 
 const auth =(handler: Function) => {
@@ -31,7 +13,7 @@ const auth =(handler: Function) => {
         }
 
         // const token = await req.headers.authorization.split(" ")[1]\;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlAxQGdtYWlsLmNvbSIsImlhdCI6MTcyNDE5MDUxNCwiZXhwIjoxNzI0MjczMzE0fQ.ICi5UYNfjZJhhS8P4LJ2lt0BsrMt400G44HJ07KZaC4"
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlAyQGdtYWlsLmNvbSIsImlhdCI6MTcyNDI3ODkxMywiZXhwIjoxNzI0MzYxNzEzfQ.vTMyhHFax-yMSOGa3L5RrgIx-fDn4BzLR6iS_4RYG4Q"
 
         if(!token){
             return res.status(401).json({message:"No token provided"});

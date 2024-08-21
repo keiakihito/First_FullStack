@@ -1,20 +1,8 @@
 import mongoose from "mongoose";
+import {ItemDataType, UserDataType} from "./types";
 
 const Schema = mongoose.Schema;
 
-interface ItemDataType{
-    title: string
-    image: string
-    price: string
-    description: string
-    email: string
-}
-
-interface UserDataType{
-    name: string
-    email: string
-    password: string
-}
 
 const ItemSchema = new Schema<ItemDataType>({
     title: String,

@@ -1,17 +1,21 @@
+import { NextApiResponse } from "next";
 import jwt from "jsonwebtoken"; // JSON token lets user stay in the account
 import connectDB from "../../../utils/database";
 import {UserModel} from "../../../utils/schemaModels";
+import { ExtendedNextApiRequestUser, SavedUserDataType, ResMessageType} from "../../../utils/types";
+
 
 const secret_key = "nextmarket";
 
 
-const loginUser = async (req, res) => {
+const loginUser = async (req: ExtendedNextApiRequestUser, res: NextApiResponse<ResMessageType>) => {
 
     try{
         await connectDB();
         //Check the user is registered user or not
         //If not, register first.
-        const savedUserData = await UserModel.findOne({email: req.body.email});
+        // userData potentially exist, but may not exist. In this case | null as a place holder.
+        const savedUserData: SavedUserDataType | null = await UserModel.findOne({email: req.body.email});
         if(savedUserData){
             //This case user is already registered and log in
             if(req.body.password == savedUserData.password){

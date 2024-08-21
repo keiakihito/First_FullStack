@@ -1,12 +1,18 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '../../../../utils/database';
 import {ItemModel} from '../../../../utils/schemaModels';
 import auth from '../../../../utils/auth';
+import {ExtendedNextApiRequestItem, SavedItemDataType, ResMessageType} from "../../../../utils/types";
 
-const updateItem =async(req, res) => {
+const updateItem =async(req: ExtendedNextApiRequestItem, res: NextApiResponse<ResMessageType>) => {
     console.log(req);
     try{
         await connectDB();
-        const singleItem = await ItemModel.findById(req.query.id);
+        const singleItem: SavedItemDataType | null = await ItemModel.findById(req.query.id);
+        if(!singleItem){
+            return res.status(400).json({message: "Item not found, and cannot be modified."});
+        }
+
         if(singleItem.email === req.body.email){
             //Check the user update the same user information
             //When the user email in token and email in the item match, the update happens.

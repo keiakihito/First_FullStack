@@ -1,10 +1,14 @@
+import type {NextApiRequest, NextApiResponse} from "next";
 import connectDB from '../../../utils/database';
 import {ItemModel} from "../../../utils/schemaModels"
+import {SavedItemDataType, ResReadAllType} from "../../../utils/types";
 
-const getAllItems =async(req, res) => {
+
+
+const getAllItems =async(req: NextApiRequest, res: NextApiResponse<ResReadAllType>) => {
     try{
         await connectDB();
-        const allItems = await ItemModel.find();
+        const allItems: SavedItemDataType[] = await ItemModel.find();
         console.log("Success: getAllItems");
         return res.status(200).json({message: "Success to get all Items", allItems: allItems});
     }catch(err){
