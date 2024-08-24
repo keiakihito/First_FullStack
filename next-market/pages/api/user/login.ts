@@ -6,12 +6,17 @@ import { ExtendedNextApiRequestUser, SavedUserDataType, ResMessageType} from "..
 
 
 const secret_key = "nextmarket";
-
+const debug:boolean = false;
 
 const loginUser = async (req: ExtendedNextApiRequestUser, res: NextApiResponse<ResMessageType>) => {
-
+    if(req.method !== "POST"){
+        return res.status(405).json({message:"Method not allowed"});
+    }
     try{
         await connectDB();
+        if(debug){
+            console.log("Database connected successfully");
+        }
         //Check the user is registered user or not
         //If not, register first.
         // userData potentially exist, but may not exist. In this case | null as a place holder.
@@ -26,7 +31,10 @@ const loginUser = async (req: ExtendedNextApiRequestUser, res: NextApiResponse<R
                 }
                 //Token lets user stay in the account up to 23h.
                 const token = jwt.sign(payload, secret_key, {expiresIn: "23h"});
-                console.log(token);
+                if(debug){
+                    console.log("Backend issues token", token);
+                }
+
                 return res.status(200).send({message:"Succeed to login", token: token});
             }else{
                 // User account exists, but password does not match.
