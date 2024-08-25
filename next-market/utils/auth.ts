@@ -12,8 +12,7 @@ const auth =(handler: Function) => {
             return handler(req,res);
         }
 
-        // const token = await req.headers.authorization.split(" ")[1]\;
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlAyQGdtYWlsLmNvbSIsImlhdCI6MTcyNDI3ODkxMywiZXhwIjoxNzI0MzYxNzEzfQ.vTMyhHFax-yMSOGa3L5RrgIx-fDn4BzLR6iS_4RYG4Q"
+        const token = await req.headers.authorization.split(" ")[1];
 
         if(!token){
             return res.status(401).json({message:"No token provided"});
