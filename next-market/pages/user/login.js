@@ -14,7 +14,7 @@ const Login = () =>{
         }
         try{
             //Send user input to backend
-            const response = await fetch("http://localhost:3000/api/user/login", {
+            const response = await fetch("https://first-full-stack-three.vercel.app//api/user/login", {
                 method: "POST",
                 headers:{
                     "Accept": "application/json",
