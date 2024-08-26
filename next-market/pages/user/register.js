@@ -16,7 +16,7 @@ const Register = () =>{
             //Sending user data from input to api/user/register.js
             //It requests backend to create a new user, which means method is POST.
             //Need to check the sending data to backend is success or not.
-            const response = await fetch("https://first-full-stack-three.vercel.app//api/user/register", {
+            const response = await fetch("https://first-full-stack-three.vercel.app/api/user/register", {
                 method: "POST",
                 headers: {
                     //Sending data with json format
