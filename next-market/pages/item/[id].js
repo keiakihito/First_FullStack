@@ -32,7 +32,7 @@ export default ReadSingleItem
 
 export const getServerSideProps = async(context) => {
     //${context.query.id} fetches the item id and concat url to navigate intended item page
-    const response = await fetch(`https://first-full-stack-three.vercel.app/api/item/${context.query.id}`);
+    const response = await fetch(`http://localhost:3000/api/item/${context.query.id}`);
     const singleItem = await response.json();
     if(debug){
         console.log("context information: ", context);
