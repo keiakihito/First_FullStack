@@ -1,5 +1,6 @@
 import Image from "next/image";
-
+import useAuth from "../../../utils/useAuth";
+import Head from "next/head";
 
 const debug = false;
 
@@ -33,19 +34,29 @@ const DeleteItem = (props) =>{
             alert("Fail to delete the item.");
         }
     }
-    return(
-        <div>
-            <h1>Delete the item</h1>
-            <form onSubmit={handleSubmit}>
-                <h2>{props.singleItem.title}</h2>
-                    <Image src={props.singleItem.image} width={750} height={500} alt={"item-image"}/>
-                    <h3>¥{props.singleItem.price}</h3>
-                    <p>{props.singleItem.description}</p>
-                <button>Delete</button>
-            </form>
 
-        </div>
-    )
+    const loginUser = useAuth();
+
+    //Check login user's email address matches  item id(email address).
+    if(loginUser === props.singleItem.email){
+        return(
+            <div className="delete-page">
+                <Head><title>Delete the item</title></Head>
+                <h1>Delete the item</h1>
+                <form onSubmit={handleSubmit}>
+                    <input value ={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Item Name" required/>
+                    <input value ={price} onChange={(e) => setPrice(e.target.value)} type="text" name="price" placeholder="price" required/>
+                    <input value = {image} onChange={(e) => setImage(e.target.value)} type="text" name="image" placeholder="item image" required/>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} name="description" rows={15} placeholder="Item description" required/>
+                    <button>Edit</button>
+                </form>
+            </div>
+        );
+    }else{
+        //User cannot update different user's item.
+        return <h1>No authorization to delete it.</h1>
+    } // end of if
+
 
 }
 

@@ -1,5 +1,7 @@
 import Image from "next/image";
-import LInk from "next/link";
+import Link from "next/link";
+import Head from "next/head";
+
 
 const debug = true;
 
@@ -7,7 +9,8 @@ const debug = true;
 const ReadSingleItem = (props) =>{
     console.log("props in ReadSingleItem: ",props);
     return (
-        <div>
+        <div className={"grid-container-si"}>
+            <Head><title>{props.singleItem.image}</title></Head>
             <div>
                 <Image src = {props.singleItem.image} width={750} height={500} alt="item-image"/>
             </div>
@@ -17,8 +20,8 @@ const ReadSingleItem = (props) =>{
                 <hr/>
                 <p>{props.singleItem.description}</p>
                 <div>
-                    <LInk href={`/item/update/${props.singleItem._id}`}><a>Edit the item</a></LInk>
-                    <LInk href={`/item/delete/${props.singleItem._id}`}><a>Delete the item</a></LInk>
+                    <Link href={`/item/update/${props.singleItem._id}`}>Edit the item</Link>
+                    <Link href={`/item/delete/${props.singleItem._id}`}>Delete the item</Link>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 // import Image from "next/image";
 import {useState} from "react";
+import useAuth from "../../../utils/useAuth";
+import Head from "next/head";
 
 const debug = false;
 
@@ -44,19 +46,29 @@ const UpdateItem = (props) =>{
             alert("Fail to edit the item.");
         }
     }
-    return(
-        <div>
-            <h1>Edit the item</h1>
-            <form onSubmit={handleSubmit}>
-                <input value ={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Item Name" required/>
-                <input value ={price} onChange={(e) => setPrice(e.target.value)} type="text" name="price" placeholder="price" required/>
-                <input value = {image} onChange={(e) => setImage(e.target.value)} type="text" name="image" placeholder="item image" required/>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} name="description" rows={15} placeholder="Item description" required/>
-                <button>Edit</button>
-            </form>
 
-        </div>
-    )
+    const loginUser = useAuth();
+
+    //Check login user's email address matches  item id(email address).
+    if(loginUser === props.singleItem.email){
+        return(
+            <div>
+                <Head><title>Edit the item</title></Head>
+                <h1 className = "page-title">Edit the item</h1>
+                <form onSubmit={handleSubmit}>
+                    <input value ={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Item Name" required/>
+                    <input value ={price} onChange={(e) => setPrice(e.target.value)} type="text" name="price" placeholder="price" required/>
+                    <input value = {image} onChange={(e) => setImage(e.target.value)} type="text" name="image" placeholder="item image" required/>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} name="description" rows={15} placeholder="Item description" required/>
+                    <button>Edit</button>
+                </form>
+            </div>
+        );
+    }else{
+        //User cannot update different user's item.
+        return <h1>No authorization to update it.</h1>
+    }
+
 
 }
 

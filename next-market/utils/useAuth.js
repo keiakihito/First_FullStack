@@ -5,8 +5,9 @@ import {useState, useEffect} from "react"; // useEffect perform before pages are
 import {useRouter} from "next/router";
 import jwt from "jsonwebtoken";
 
-const secret_key = "nextmarket";
-const debug = true;
+// const secret_key = "nextmarket";
+const debug = false;
+
 
 const useAuth =()=> {
 
@@ -15,7 +16,7 @@ const useAuth =()=> {
 
     useEffect(() => {
         if(debug){
-            console.log("useEffect is running");
+            console.log("useEffect is running, and retrieve token");
         }
         const token = localStorage.getItem("token");
         if(debug){
@@ -30,23 +31,33 @@ const useAuth =()=> {
 
         try{
             //Check the exising token is valid or not.
+            const decodedToken = jwt.decode(token);
             if(debug){
                 console.log("Verify retrieved token",token);
-                const decodedToken = jwt.decode(token);
                 console.log("Decoded token",decodedToken);
             }
 
-            const decoded = jwt.verify(token, secret_key);
-            if(debug){
-                console.log("Decoded token",decoded);
-            }
+            //FIXME figure out need to jwt.verify needs on frontend
+            // const decoded = jwt.verify(token, secret_key);
+            // if(debug){
+            //     console.log("Decoded token",decoded);
+            // }
+
             //Store use email address
-            setLoginUser(decoded.email);
+            if(debug){
+                console.log("email in the decodedToken",decodedToken.email);
+            }
+            setLoginUser(decodedToken.email);
+
         }catch(err){
             console.log("Token verification failed.");
-            console.error("Token verification failed: ", err);
+            console.log("Error name: ", err.name);
+            console.log("Error message: ", err.message);
+            console.log("Error stack: ", err.stack);
             router.push("/user/login");
         }
+
+
     }, [router]);
 
     //loginUser holds user email address to proceed modify and delete item.

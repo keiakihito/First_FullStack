@@ -42,7 +42,10 @@ const Register = () =>{
 
     return(
         <div>
-            <h1>User Registration</h1>
+            <header>
+                Header
+            </header>
+            <h1 className="page-title">User Registration</h1>
             <form onSubmit={handleSubmit}>
                 {/*When the user input the name, e holds the value */}
                 {/*e is passed to setName to store value to name. e.target.value specifies name in the e*/}
@@ -52,6 +55,9 @@ const Register = () =>{
                 <input value = {password} onChange = {(e) => setPassword(e.target.value)} type="text" name="password" placeholder="Password" required/>
                 <button>Submit</button>
             </form>
+            <footer>
+                footer
+            </footer>
         </div>
     )
 }

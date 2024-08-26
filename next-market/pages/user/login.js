@@ -43,7 +43,10 @@ const Login = () =>{
 
     return (
         <div>
-            <h1>Login</h1>
+            <header>
+                header
+            </header>
+            <h1 className="page-title">Login</h1>
             {/*Accept user input and send it to the backend, then receive response from backend*/}
             {/*user input is store to email and password*/}
             <form onSubmit={handleSubmit}>
@@ -51,6 +54,9 @@ const Login = () =>{
                 <input value = {password} onChange={(e) => setPassword(e.target.value)} type="text" name="password" placeholder="Password" required/>
                 <button>Log in</button>
             </form>
+            <footer>
+                footer
+            </footer>
         </div>
     )
 }
