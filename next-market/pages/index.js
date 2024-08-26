@@ -36,7 +36,7 @@ export default ReadAllItems;
 //Next.js feature to fetch all the data in DB
 //Pass to ReadAllItems function above through props
 export const getServerSideProps = async() => {
-    const response = await fetch("https://first-full-stack-ndsyvorwg-kkatsumis-projects.vercel.app/api/item/readall"); // method: "GET" is default
+    const response = await fetch("https://first-full-stack-git-main-kkatsumis-projects.vercel.app/api/item/readall"); // method: "GET" is default
     const allItems = await response.json();
     return {
         props: allItems
