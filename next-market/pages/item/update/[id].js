@@ -15,7 +15,7 @@ const UpdateItem = (props) =>{
     const handleSubmit = async(e)=>{
         e.preventDefault();
         try{
-            const response = await fetch(`https://first-full-stack-three.vercel.app/api/item/update/${props.singleItem._id}`, {
+            const response = await fetch(`https://first-full-stack-ndsyvorwg-kkatsumis-projects.vercel.app/api/item/update/${props.singleItem._id}`, {
                 method: "PUT",
                 headers:{
                     "Accept": "application/json",
@@ -76,7 +76,7 @@ export default UpdateItem;
 
 export const getServerSideProps = async(context) => {
     //${context.query.id} fetches the item id and concat url to navigate intended item page
-    const response = await fetch(`https://first-full-stack-three.vercel.app/api/item/${context.query.id}`);
+    const response = await fetch(`https://first-full-stack-ndsyvorwg-kkatsumis-projects.vercel.app/api/item/${context.query.id}`);
     const singleItem = await response.json();
     if(debug){
         console.log("context information: ", context);
