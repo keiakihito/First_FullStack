@@ -78,3 +78,27 @@ export interface ResReadSingleType{
     message: string
     singleItem?: SavedItemDataType;
 }
+
+//Frontend
+//[id].tsx, update/[id].tsx, delete/[id].tsx
+export interface ReadSingleDataType{
+    singleItem:{
+        _id: string
+        title: string
+        image: string
+        price: string
+        description: string
+        email: string
+    }
+}
+
+export interface ReadAllDataType{
+    allItems:{
+        _id:string
+        title:string
+        image:string
+        price:string
+        description:string
+        email:string
+    }[]
+}

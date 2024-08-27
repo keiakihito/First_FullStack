@@ -1,34 +1,29 @@
-// import Image from "next/image";
-import {useState} from "react";
+import type {NextPage, GetServerSideProps} from "next";
+import Image from "next/image";
 import useAuth from "../../../utils/useAuth";
 import Head from "next/head";
+import {ReadSingleDataType} from "../../../utils/types";
+import {useState} from "react";
 
 const debug = false;
 
 
-const UpdateItem = (props) =>{
-    const [title, setTitle] = useState(props.singleItem.title);
-    const [price, setPrice] = useState(props.singleItem.price);
-    const [image, setImage] = useState(props.singleItem.image);
-    const [description, setDescription] = useState(props.singleItem.description);
+const DeleteItem: NextPage<ReadSingleDataType>= (props) =>{
+    const [title, setTitle] = useState<string>(props.singleItem.title);
+    const [price, setPrice] = useState<string>(props.singleItem.price);
+    const [image, setImage] = useState<string>(props.singleItem.image);
+    const [description, setDescription] = useState<string>(props.singleItem.description);
 
-    const handleSubmit = async(e)=>{
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         try{
-            const response = await fetch(`http://localhost:3000/api/item/update/${props.singleItem._id}`, {
-                method: "PUT",
+            const response = await fetch(`http://localhost:3000/api/item/delete/${props.singleItem._id}`, {
+                method: "POST",
                 headers:{
                     "Accept": "application/json",
                     "Content-Type": "application/json",
                     "authorization": `Bearer ${localStorage.getItem("token")}`,
                 },
-                body: JSON.stringify({
-                    title: title,
-                    price: price,
-                    image: image,
-                    description: description,
-                    email: props.singleItem.email
-                })
             });
             const jsonData = await response.json();
 
@@ -36,14 +31,14 @@ const UpdateItem = (props) =>{
                 console.log(jsonData);
             }
             if(response.ok){
-                alert("Succeed to edit the item.");
+                alert("Succeed to delete the item.");
             }else{
-                alert("Failed to edit the item.");
+                alert("Failed to delete the item.");
             }
 
 
         }catch(err){
-            alert("Fail to edit the item.");
+            alert("Fail to delete the item.");
         }
     }
 
@@ -52,9 +47,9 @@ const UpdateItem = (props) =>{
     //Check login user's email address matches  item id(email address).
     if(loginUser === props.singleItem.email){
         return(
-            <div>
-                <Head><title>Edit the item</title></Head>
-                <h1 className = "page-title">Edit the item</h1>
+            <div className="delete-page">
+                <Head><title>Delete the item</title></Head>
+                <h1>Delete the item</h1>
                 <form onSubmit={handleSubmit}>
                     <input value ={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Item Name" required/>
                     <input value ={price} onChange={(e) => setPrice(e.target.value)} type="text" name="price" placeholder="price" required/>
@@ -66,15 +61,15 @@ const UpdateItem = (props) =>{
         );
     }else{
         //User cannot update different user's item.
-        return <h1>No authorization to update it.</h1>
-    }
+        return <h1>No authorization to delete it.</h1>
+    } // end of if
 
 
 }
 
-export default UpdateItem;
+export default DeleteItem;
 
-export const getServerSideProps = async(context) => {
+export const getServerSideProps: GetServerSideProps<ReadSingleDataType> = async(context) => {
     //${context.query.id} fetches the item id and concat url to navigate intended item page
     const response = await fetch(`http://localhost:3000/api/item/${context.query.id}`);
     const singleItem = await response.json();

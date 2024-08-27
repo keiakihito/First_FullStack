@@ -1,10 +1,12 @@
-import Link from "next/link"
-import Image from "next/image"
-import Head from "next/head"
+import type {NextPage, GetStaticProps, GetServerSideProps} from "next";
+import Link from "next/link";
+import Image from "next/image";
+import Head from "next/head";
+import { ReadAllDataType} from "../utils/types";
 
 const debug = true;
 
-const ReadAllItems = (props) =>{
+const ReadAllItems: NextPage<ReadAllDataType> = (props) =>{
     //fetch all the data from DB with getServerSideProps
     if(debug){
         console.log("ReadAllItems with getServerSideProps: ", props);
@@ -35,7 +37,7 @@ export default ReadAllItems;
 
 //Next.js feature to fetch all the data in DB
 //Pass to ReadAllItems function above through props
-export const getServerSideProps = async() => {
+export const getServerSideProps: GetServerSideProps<ReadAllDataType> = async() => {
     const response = await fetch("http://localhost:3000/api/item/readall"); // method: "GET" is default
     const allItems = await response.json();
     return {

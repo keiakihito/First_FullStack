@@ -1,11 +1,12 @@
-import {useState} from "react";
+import type {NextPage} from "next";
+import React, {useState} from "react";
 import useAuth from "../../utils/useAuth";
 import Head from "next/head";
 import ImgInput from "../../components/ImgInput";
 
 const debug = false;
 
-const CreateItem = () =>{
+const CreateItem: NextPage = () =>{
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [image, setImage] = useState("");
@@ -13,7 +14,7 @@ const CreateItem = () =>{
 
 
 
-    const handleSubmit = async(e)=>{
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         try{
             const response = await fetch("http://localhost:3000/api/item/create", {
@@ -63,7 +64,9 @@ const CreateItem = () =>{
 
             </div>
         );
-    } // end of if
+    } else{
+        return <h1>Please log in first. </h1>
+    }
 
 }
 

@@ -31,10 +31,17 @@ const useAuth =()=> {
 
         try{
             //Check the exising token is valid or not.
-            const decodedToken = jwt.decode(token);
+            //Token will not null
+            const decodedToken = jwt.decode(token!) as { email: string} | null;
             if(debug){
                 console.log("Verify retrieved token",token);
                 console.log("Decoded token",decodedToken);
+            }
+
+            if(!decodedToken || !decodedToken.email){
+                console.log("Token is invalid or does not contain email");
+                router.push("/user/login");
+                return;
             }
 
             //FIXME figure out need to jwt.verify needs on frontend
@@ -45,15 +52,20 @@ const useAuth =()=> {
 
             //Store use email address
             if(debug){
-                console.log("email in the decodedToken",decodedToken.email);
+                console.log("email in the decodedToken", decodedToken.email);
             }
             setLoginUser(decodedToken.email);
 
         }catch(err){
             console.log("Token verification failed.");
-            console.log("Error name: ", err.name);
-            console.log("Error message: ", err.message);
-            console.log("Error stack: ", err.stack);
+            if (err instanceof Error){
+                console.log("Error name: ", err.name);
+                console.log("Error message: ", err.message);
+                console.log("Error stack: ", err.stack);
+                router.push("/user/login");
+            }else{
+                console.log("Unknown error: ", err);
+            }
             router.push("/user/login");
         }
 

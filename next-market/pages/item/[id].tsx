@@ -1,12 +1,13 @@
+import type{NextPage, GetServerSideProps} from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-
+import {ReadSingleDataType} from "../../utils/types"
 
 const debug = true;
 
 
-const ReadSingleItem = (props) =>{
+const ReadSingleItem: NextPage<ReadSingleDataType> = (props) =>{
     console.log("props in ReadSingleItem: ",props);
     return (
         <div className={"grid-container-si"}>
@@ -30,7 +31,7 @@ const ReadSingleItem = (props) =>{
 
 export default ReadSingleItem
 
-export const getServerSideProps = async(context) => {
+export const getServerSideProps: GetServerSideProps<ReadSingleDataType> = async(context) => {
     //${context.query.id} fetches the item id and concat url to navigate intended item page
     const response = await fetch(`http://localhost:3000/api/item/${context.query.id}`);
     const singleItem = await response.json();
