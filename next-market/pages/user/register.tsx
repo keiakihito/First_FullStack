@@ -1,6 +1,8 @@
-import {useState} from "react"
 
-const Register = () =>{
+import type {NextPage} from "next";
+import {useState} from "react";
+
+const Register: NextPage = () =>{
 
     //React pass data through state
     //This is a place to save name from user input
@@ -10,7 +12,7 @@ const Register = () =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault(); // It prevents reload when user input data.
         try {
             //Sending user data from input to api/user/register.js

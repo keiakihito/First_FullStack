@@ -1,13 +1,14 @@
+import type {NextPage} from "next";
 import {useState} from "react";
 
 const debug = true;
 
 
-const Login = () =>{
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+const Login: NextPage = () =>{
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Avoid reload with hitting submit button by user
         if(debug){
             console.log("handleSubmit triggered.");
@@ -50,8 +51,8 @@ const Login = () =>{
             {/*Accept user input and send it to the backend, then receive response from backend*/}
             {/*user input is store to email and password*/}
             <form onSubmit={handleSubmit}>
-                <input value = {email} onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="Email Address" required/>
-                <input value = {password} onChange={(e) => setPassword(e.target.value)} type="text" name="password" placeholder="Password" required/>
+                <input value = {email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} type="text" name="email" placeholder="Email Address" required/>
+                <input value = {password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} type="text" name="password" placeholder="Password" required/>
                 <button>Log in</button>
             </form>
             <footer>

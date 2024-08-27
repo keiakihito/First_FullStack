@@ -1,6 +1,7 @@
 import {useState} from "react";
 import useAuth from "../../utils/useAuth";
 import Head from "next/head";
+import ImgInput from "../../components/ImgInput";
 
 const debug = false;
 
@@ -50,6 +51,8 @@ const CreateItem = () =>{
             <div>
                 <Head><title>Create a new item</title></Head>
                 <h1 className = "page-title">Create a new item</h1>
+                {/*When user upload image, it is stored to setImage*/}
+                <ImgInput setImage={setImage} />
                 <form onSubmit={handleSubmit}>
                     <input value ={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Item Name" required/>
                     <input value ={price} onChange={(e) => setPrice(e.target.value)} type="text" name="price" placeholder="price" required/>
